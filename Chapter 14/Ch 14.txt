@@ -1,0 +1,16 @@
+Ch 14
+
+
+--Create a role using the following query:
+CREATE ROLE role_name;
+
+
+--PostgreSQL and indicate the beginning of a new transaction.
+SET TRANSACTION WORK; 
+--For example:
+BEGIN;
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SET TRANSACTION READ ONLY;
+-- Perform some operations
+COMMIT;
+

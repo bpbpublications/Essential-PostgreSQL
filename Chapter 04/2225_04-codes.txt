@@ -1,0 +1,159 @@
+Ch 4: 
+
+--The CREATE TABLE statement given below, is used to create new tables
+CREATE TABLE [IF NOT EXISTS] table_name (
+column1 datatype(length) column_contraint,
+column2 datatype(length) column_contraint,
+column3 datatype(length) column_contraint,
+table_constraints
+);
+
+--By using the following code, you can get the information about ‘Employee’ table
+select * from information_schema.columns
+where table_name='Employee';
+
+--Example of table inheritance
+CREATE TABLE products_base (
+product_id SERIAL PRIMARY KEY,
+name VARCHAR(255),
+description TEXT,
+price NUMERIC(10, 2)
+);
+CREATE TABLE electronics_child () INHERITS (products_base);
+CREATE TABLE clothing_child () INHERITS (products_base);
+CREATE TABLE books_child () INHERITS (products_base);
+
+--The following code, describes the ‘clothing_child’ table
+select table_name,column_name, data-type
+from
+information_schema.columns
+where
+table_name='clothing_child';
+
+--Add attributes, categories, and columns in child tables as needed, using the following code
+ALTER TABLE electronics ADD COLUMN brand VARCHAR(50);
+ALTER TABLE clothing ADD COLUMN available_size VARCHAR(10);
+ALTER TABLE books ADD COLUMN author_name VARCHAR(100);
+
+--Let us now insert one-one record in child tables using the following code
+insert into electronics_child(name,description,price,brand)
+values('Speaker','Bluetooth speaker',454545.34,'Samsung')
+insert into books_child(name,description,price,author_name) values('Java-A
+complete practical solution','Complete hands on book',657.3,'Swati
+saxena');
+insert into clothing_child(name,description,price,available_size)
+values('T-Shirt','Full sleeves',1657.3,'L');
+
+--If you insert a record in a parent table, it will not be visible in child table, as shown
+insert into products_base(name,description,price)
+values('Chair','Wooden',1657.3);
+select * from books_child
+
+--List of district based on states will be created using the following code
+CREATE TABLE customers (id INTEGER, location TEXT, phone NUMERIC) PARTITION
+BY LIST(location);
+CREATE TABLE cust_US PARTITION OF customers FOR VALUES IN ('US');
+CREATE TABLE cust_IND PARTITION OF customers FOR VALUES IN ('INDIA');
+CREATE TABLE cust_others PARTITION OF customers DEFAULT;
+
+--From January to June, the range partition will be created using
+CREATE TABLE test (id INTEGER, name TEXT) PARTITION BY RANGE(id);
+CREATE TABLE test1 PARTITION OF test FOR VALUES FROM(0) TO (10);
+CREATE TABLE test2 PARTITION OF test FOR VALUES FROM(11) TO (20);
+
+--Example of hash partition
+CREATE TABLE customers (id INTEGER, location TEXT) PARTITION BY HASH(id);
+CREATE TABLE customer_part1 PARTITION OF customers FOR VALUES WITH (modulus
+3, remainder 0);
+CREATE TABLE customer_part2 PARTITION OF customers FOR VALUES WITH (modulus
+3, remainder 1);
+
+--The "unlogged" keyword is used to create an unlogged table, as shown
+CREATE UNLOGGED TABLE unlogged_table (
+id serial PRIMARY KEY,
+name VARCHAR(255)
+);
+
+--The following code is creating the ‘fruit‘ table
+create table fruit(
+fruit_id serial,
+fruit_name varchar(20));
+Adding rows in table: Fruit
+insert into fruit(fruit_name) values('Apple'),('Kiwi'),('orange'0,('Cherry')
+Display table:Fruit
+select * from fruit;
+
+--Insert data into table, as shown
+insert into voting_eligibility values(101,12,'f'),(102,'35',true), (301,43,
+'t'),
+(401,66, '1'),
+(501, 73,'y'),
+(601, 31,'yes'),
+(701, 17,'no'),
+(801, 15,'0');
+
+--Insert values into the table, as shown
+INSERT INTO text_test (x, y)
+VALUES
+(
+'Postgres',
+'We are learning databse'
+),
+(
+'Essential Postgres',
+'A guide for developers'
+);
+
+--Create a table “product” with manufature_date and expiry_date
+CREATE TABLE product (
+product_id serial PRIMARY KEY,
+product_name VARCHAR (255),
+manufacture_date DATE NOT NULL default current_date,
+expiry_date DATE NOT NULL
+
+--Create a table that holds shift schedules details of a company
+CREATE TABLE shift_schedule (
+id serial PRIMARY KEY,
+shift_name VARCHAR NOT NULL,
+clock_in_time TIME NOT NULL,
+clock_out_time TIME NOT NULL
+
+--Create a table for timestamp_demo
+CREATE TABLE timestamp_demo (
+ts TIMESTAMP,
+tstz TIMESTAMPTZ
+);
+
+--To install the uuid-ossp module, you use the CREATE EXTENSION statement as follows
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+SELECT uuid_generate_v1();
+
+--Here, we are using text [] to store more than one country name that produces fruits
+CREATE TABLE Items (
+item_id SERIAL PRIMARY KEY,
+item_name char(5) NOT NULL,
+country text[]
+);
+
+--The following code is used to create table:Books
+create table books(
+id serial primary key,
+title varchar(255),
+attribute hstore
+);
+Adding data into table:Books
+insert into books (title, attribute)
+values
+(
+' java complete practical solution',
+'"paperback"=>"763",
+"publisher"=>"CS publisher",
+"language"=>"English"
+"ISBN-13"=>978-1449370000",
+"weight" => "11.2 ounces" '
+);
+Display table:Books
+select * from books;
+
+
+

@@ -1,0 +1,68 @@
+Ch 16
+
+--Let us now write a function that takes customer id and returns information of customer such as the customer name and customer city:
+create or replace function cust_info(cid varchar) returns table(cname customers.contact_name%type, ccity customers.city%type) as $$ begin return query select contact_name as cname,city as ccity from customers where customer_id=cid; if not found then     raise exception 'not found'; end if; end;$$ language plpgsql;
+
+
+--To return records of all the customers, we can use setof(), as shown:
+create or replace function func4() returns setof customers as $$ begin return query select * from customers; end; $$ language plpgsql;
+
+
+--For example, the function to calculate the addition of two numbers is:
+create or replace function addition(num1 int ,num2 int) returns int as $$ declare
+ 	result int;
+begin
+ 	result:=num1+num2;
+ 	return result;
+end ;$$ language plpgsql;
+
+
+--For example, to display the product name ordered by customer HANAR, we have:
+create or replace function order_by_customer (cname varchar) returns setof varchar as $$ begin return query select product_name from products where product_id in 
+(select product_id from order_details where order_id in  	(select order_id from orders where customer_id='HANAR')); end; $$ language plpgsql;
+
+
+--To display the product name and price using function, without return statement, we have:
+create or replace function product_name(pid int ,out pname varchar, out price real) as $$ begin  	select product_name,unit_price into pname,price from products  	where product_id=pid; end ;
+$$ language plpgsql;
+
+
+--For example, to create a cube function to return cube of value passed as an argument, we have:
+create or replace function cube(INOUT N int) as $$ begin
+ 	N:=N*N*N;
+end; $$ language plpgsql;
+
+
+--For example, function that prints half of the number given, is as shown:
+create or replace function half(INOUT N numeric) as $$ begin
+ 	N:=N*.5
+end; $$ langugae plpgsql select * from half(10);
+
+
+--Let us create a function that prints half and double of value given:
+create or replace function half_double(IN N numeric,OUT half numeric,OUT doublen numeric) as $$ 
+begin
+ 	half:=N * .5;  	doublen:= N * 2;
+end; $$ language plpgsql;
+
+
+--You can also assign a default value to function parameter, using:
+create or replace function multiply(N1 int , N2 int default 1,OUT res int) as $$ begin
+ 	res:=N1 * N2;
+end; $$ language plpgsql;
+
+
+--When you call the getName( ) function, PostgreSQL selects the function based on the argument passed.
+create or replace function getName (id int) returns varchar as $$ declare vname varchar; begin select product_name into vname from products where product_id=id; return vname; end; $$ language plpgsql;
+
+
+--For example, before inserting or updating the person table, capitalize first letter of the gender:
+CREATE OR REPLACE FUNCTION convert_to_title_case()
+RETURNS TRIGGER AS $$
+BEGIN
+ 	NEW.gender := initcap(NEW.gender);  	return NEW;
+END;
+$$ language plpgsql;
+
+
+

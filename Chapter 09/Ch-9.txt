@@ -1,0 +1,17 @@
+Ch 9
+
+
+--Create a table order with default order quantity using the given code:
+create table orders( order_id serial primary key, customer_id varchar not null, quantity int default 1 );
+
+--To add data to the table, use the following code:
+insert into orders (customer_id) values('ANATR'); insert into orders (customer_id,quantity) values('ALFKI',5) insert into orders values (3,'ANTON',6)
+insert into orders (order_id,customer_id,quantity) values (4,'SALVI',3)
+
+--we are inserting multiple rows in one insert into statement, as shown:
+insert into orders (customer_id,quantity) values ('ANATR',2),
+('ALFKI',5),
+('ANTON',6),
+('SALVI',3)
+
+

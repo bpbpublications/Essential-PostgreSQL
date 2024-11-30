@@ -1,0 +1,27 @@
+Ch 6
+
+--Alter command syntax
+ALTER TABLE table_name ADD COLUMN new_column_name TYPE;
+
+
+--Here, we are changing the deptno column name to dept_num of dept table:
+alter table dept rename column deptno to dept_num
+
+
+--Now rename column dnmae to dept_name:
+alter table dept rename column dnmae to dept_name
+
+
+--To change a default value of the column, you can use ALTER TABLE ALTER COLUMN SET DEFAULT or DROP DEFAULT:
+ALTER TABLE table_name 
+ALTER COLUMN column_name 
+[SET DEFAULT value | DROP DEFAULT];
+
+--To change the NOT NULL constraint, you can use ALTER TABLE ALTER COLUMN statement:
+ALTER TABLE table_name 
+ALTER COLUMN column_name 
+[SET NOT NULL| DROP NOT NULL];
+
+
+--After DROP NOT NULL, you can insert row without inserting emp_name: alter table employee alter column emp_name drop not null;
+insert into employee(emp_id,emp_salary,gender) values(8,48888.5,'Male');

@@ -1,0 +1,14 @@
+Ch 13
+
+
+--Open one Query tool in pgAdmin, and put in the following query:
+start transaction; insert into person values(10001,'Tom','Jerry','tom@gmaill. com','Male');
+
+
+--Insert a new row:
+insert into person values(1002,'Twinkle','Twinkle','twinkle@gmaill. com','female');
+
+
+--Insert one more row:
+insert into person values(1003,'Alisha','Fairy','fairy@gmaill. com','female');
+
