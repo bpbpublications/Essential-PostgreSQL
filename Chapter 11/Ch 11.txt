@@ -1,0 +1,120 @@
+﻿Chapter:11  
+#select product_id,product_name,unit_price 
+from products 	
+where unit_price >
+	(select avg(unit_price) from products);
+
+#select product_name 
+from products 	
+where category_id=
+	(select category_id from products where product_name='Tofu');
+#select product_name from products where
+exists(
+		select 1 from categories where products.category_id=categories.category_id 
+	);
+
+#select ename, dept_name from emp
+inner join dept
+on emp.dept_num=dept.dept_num;
+
+#select product_name,unit_price,category_name from products
+inner join categories
+on products.category_id=categories.category_id
+where categories.category_id=3;
+
+#select category_name, count(product_name) Available_product ,sum(unit_price) Total_price from products
+inner join categories
+on products.category_id=categories.category_id
+group by categories.category_id;
+
+#select category_name, count(product_name) Available_product ,sum(unit_price) Total_price 
+from products
+inner join categories
+on products.category_id=categories.category_id
+group by categories.category_id
+order by category_name;
+
+#select category_name, product_name Available_product , company_name Supplied_by 
+from products
+inner join categories
+on products.category_id=categories.category_id
+inner join suppliers
+on products.supplier_id=suppliers.supplier_id;
+
+#select category_name, product_name Available_product , company_name Supplied_by 
+from products p
+inner join categories c
+on p.category_id=c.category_id
+inner join suppliers s
+on p.supplier_id=s.supplier_id;
+
+#select ename,dept_name from emp
+left join dept
+on emp.dept_num=dept.dept_num
+
+#select order_id , ship_via shipper_id , s.company_name Shipper_name
+from orders o
+left join shippers s
+on o.ship_via=s.shipper_id;
+
+#select customer_id , order_id , ship_via shipper_id , s.company_name Shipper_name
+from orders o
+left join shippers s
+on o.ship_via=s.shipper_id
+where customer_id in ('ALFKI','QUICK','HANAR')
+order by customer_id;
+
+#select ename,dept_name from emp right join dept on emp.dept_num=dept.dept_num;
+
+#select ename,dept_name from emp right join dept using(dept_num);
+
+#select ename,dept_name from emp full outer join dept on emp.dept_num=dept.dept_num;
+
+#CREATE TABLE T1 (pname varchar(20) PRIMARY KEY);
+#CREATE TABLE T2 (score INT PRIMARY KEY);
+#INSERT INTO T1 (pname)
+VALUES	('A'),	('B');
+
+#INSERT INTO T2 (score) VALUES	(1),	(2),	(3);
+
+#SELECT * FROM T1 CROSS JOIN T2;
+
+#SELECT * FROM T1 
+CROSS JOIN T2	
+where pname='Ricky';
+
+#select * from emp order by eid;
+#select e.ename, m.ename from  emp e,emp m where e.manager=m.eid;
+
+#select * from emp natural join dept;
+
+#with product_data as
+(select category_id , sum(unit_price) as "total_unit_price"
+from products
+group by category_id)
+
+#select p.category_id,p.total_unit_price from product_data p where p.total_unit_price>300;
+
+#WITH RECURSIVE subordinates AS (
+    SELECT
+        emp_id,
+        manager_id,
+        ename
+    FROM
+        employees
+    WHERE
+        emp_id = 3
+    UNION
+        SELECT
+            e.emp_id,
+            e.manager_id,
+            e.ename
+        FROM
+            employees e
+        INNER JOIN subordinates s ON s.emp_id = e.manager_id
+) SELECT
+    *
+FROM
+    subordinates;
+
+

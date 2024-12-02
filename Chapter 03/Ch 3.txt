@@ -1,0 +1,34 @@
+﻿Chapter 3: 
+# Copy emp
+From ‘E:\postgres\Emp.csv’
+Delimiter ‘,’
+CSV header;
+
+# SELECT *
+FROM information_schema.columns
+WHERE table_name = 'Employee';
+
+#select pg_column_size(item_name) from items;
+
+#create table items(
+item_id SERIAL primary key,
+Item_name varchar(20) NOT NULL,
+Country text[]
+);
+
+#Select column_name,data_type from information_schema.columns
+Where table_name=’Books’;
+
+#create table Books(
+Id SERIAL primary key,
+title varchar(255),
+attibute hstore
+);
+
+#select column_name, data_type, is_nullable, character_maximum_length
+from information_schema.columns
+where table_name = 'books';
+
+#drop table Books
+
+

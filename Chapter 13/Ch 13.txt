@@ -1,14 +1,46 @@
-Ch 13
+﻿Chapter:13  
+#BEGIN; -- Start a transaction
+#UPDATE employee SET salary = salary * 5 WHERE dept_id = 10;
+-- Something goes wrong, decide to discard changes
+#ROLLBACK; -- Undo the changes
+
+# savepoint my_tag;
+#update person set email='twin2@gmail.com' where id=1002;
+
+#select * from person where id=1002;
+
+#RELEASE savepoint my_tag
+
+#start transaction;
+#insert into person values(10001,'Tom','Jerry','tom@gmaill.com','Male')
+
+#select * from person where id=10001
+
+#COMMIT
+
+#Begin
+
+#insert into person values(1002,'Twinkle','Twinkle','twinkle@gmaill.com','female');
+
+#select * from person;
+
+#ROLLBACK;
+
+#select * from person;
+
+#Begin
+
+#insert into person values(1002,'Twinkle','Twinkle','twinkle@gmaill.com','female');
+
+#savepoint my_tag;
+
+#insert into person values(1003,'Alisha','Fairy','fairy@gmaill.com','female');
+
+#select * from person;
+
+#rollback to my_tag;
+
+#select * from person;
 
 
---Open one Query tool in pgAdmin, and put in the following query:
-start transaction; insert into person values(10001,'Tom','Jerry','tom@gmaill. com','Male');
-
-
---Insert a new row:
-insert into person values(1002,'Twinkle','Twinkle','twinkle@gmaill. com','female');
-
-
---Insert one more row:
-insert into person values(1003,'Alisha','Fairy','fairy@gmaill. com','female');
 

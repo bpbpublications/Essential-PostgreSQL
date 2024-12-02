@@ -1,0 +1,7 @@
+﻿Chapter 2: 
+# \h
+# \l
+# drop database first_db;
+# select * from pg_database
+
+

@@ -1,0 +1,138 @@
+﻿Chapter:8  
+#select * from products where supplier_id=6;
+
+#select * from employees where title_of_courtesy='Ms.';
+
+#select * from employees where extract('year' from hire_date)::Integer=1992;
+
+#SELECT EXTRACT('Year' FROM TIMESTAMP '2010/12/12');
+
+#SELECT EXTRACT(YEAR FROM INTERVAL '16 years 10 months 3 days');
+
+#select * from customers where contact_title='Sales Representative' and city='London';
+
+#select * from customers where contact_title='Sales Representative' or city='London' ;
+
+#select * from suppliers where city in ('London', 'Tokyo','Sydney');
+
+#select customer_id, contact_name,company_name from customers
+where contact_name like 'D%';
+
+#select customer_id, contact_name,company_name from customers
+where contact_name like '__a%';
+
+#select customer_id, contact_name,company_name from customers
+where contact_name like '%r';
+
+#select customer_id, contact_name,company_name,region from customers
+where region like '__';
+
+#select count(company_name) from customers
+where company_name like ‘%D%’;
+
+#select count(company_name) from customers
+where company_name ilike '%D%';
+
+#select * from orders where ship_region is NOT NULL;
+
+#select * from suppliers where contact_title NOT LIKE '%Sales%';
+
+#select * from employees where title_of_courtesy <> 'Mr.' ;
+
+#select * from orders;
+
+#select count(customer_id) from orders;
+
+#select count(distinct(customer_id)) from orders;
+
+#INSERT INTO my_color(colour_1, colour_2)
+VALUES
+    ('pink', 'pink'),
+    ('pink', 'pink'),
+    ('pink', NULL),
+    (NULL, 'pink'),
+    ('pink', 'green'),
+    ('pink', 'yellow'),
+    ('green', 'pink'),
+    ('green', 'yellow'),
+    ('green', 'green'),
+    ('yellow', 'pink'),
+    ('yellow', 'green'),
+    ('yellow', 'yellow');
+
+#select * from orders where ship_via=2 limit 7;
+
+#select * from orders where ship_via=2 limit 7 offset 3;
+
+#select * from employees
+order by hire_date 
+fetch first 5 rows only;
+
+#select sum(unit_price) from products;
+
+#select count(*)from products;
+
+#select count(*) from orders where customer_id='FRANK'
+
+#select max(units_in_stock) from products;
+
+#select max(quantity) from order_details
+
+#select avg(unit_price) from products;
+
+#select * from products order by product_name;
+
+#select * from orders order by customer_id;
+
+#select * from orders order by customer_id , employee_id;
+
+#select * from orders order by customer_id , employee_id desc;
+
+#select * from orders order by customer_id desc , employee_id desc;
+
+#select order_id , customer_id cid from orders order by cid ;
+
+#select order_id,ship_region from orders order by ship_region nulls last;
+
+#select order_id,ship_region from orders order by ship_region nulls first;
+
+#select customer_id, count(*) Order_placed from orders  GROUP BY customer_id;
+
+#select category_id, sum(unit_price) from products group by category_id;
+
+#select supplier_id ,count(*) from products 
+group by supplier_id
+order by supplier_id desc;
+
+#SELECT dept_num, SUM(salary) FROM emp
+GROUP BY dept_num;
+
+#select customer_id,max(freight) from orders group by customer_id;
+
+#select product_name,max(units_in_stock) from products
+group by product_name 
+order by max(units_in_stock) desc 
+limit 1;
+
+#select supplier_id,category_id,sum(unit_price)
+from products
+group by supplier_id, category_id
+order by supplier_id;
+
+#select supplier_id,category_id,sum(unit_price)
+from products
+group by supplier_id, category_id
+having sum(unit_price)>100
+order by supplier_id;
+
+
+#select employee_id ,count(customer_id) from orders
+group by employee_id
+having count(*)>100;
+
+#SELECT dept_num, COUNT(eid) AS "No of Employees", MAX(salary) as "Max Salary"
+FROM emp
+GROUP BY dept_num
+HAVING COUNT(eid) > 2 AND MAX(salary) > 50000;
+
+

@@ -1,0 +1,8 @@
+Chapter:1
+#Psql  -U postgres
+#\l
+#\h
+#\q
+
+
+

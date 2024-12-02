@@ -1,0 +1,74 @@
+﻿Chapter:10  
+
+#select * from emp;
+#update emp set salary=45674
+where eid=1
+returning ename;
+
+#update items set country='{"AUS","Japan"}' where item_id=10;
+
+#update items set country[1]='SA' where item_id=1 returning *;
+
+#select item_name, unnest(country) from items ;
+
+#update books set attr=attr||'"pages"=>132'::hstore where id=2;
+
+#update books set attr='"pages"=>400'::hstore where id=2;
+
+#update books set attr='"pages"=>300,"author"=>"Dennis","price"=>456'::hstore where id=3
+
+#update person_json set info=('{"name":"Aayush","details":{"age":"11","gender":"m","country":"India"}}') where id=1;
+
+#update person_json set info = jsonb_set(info::jsonb,'{details,age}':: text[],'[14]',false)
+where id=1;
+
+#delete from personwhere id=46;
+
+#delete from person where id=20;
+
+#DELETE from person;
+
+#delete from person
+where id=33
+returning *;
+
+#DELETE from person where id in (20,33,46);
+
+#delete from sales_employees
+where emp_id=5 and emp_name='Mark';
+
+#select * from sales_employees;
+
+#create table users
+( uid serial primary key,
+username varchar(20) unique,
+email varchar(20));
+
+
+#insert into users (username,email) values 
+('Anderson','and@gmail.com'),
+('Robert','robe@gmail.com'),
+('Jerry','Jerr@gmail.com'),
+('Mike','mik@gmail.com'),
+('Chris','chris@gmail.com'),
+('Patrik','patk@gmail.com')
+
+#select * from users;
+
+#insert into users (username,email) values 
+('Andrew','and@gmail.com'),
+('Robert','robert@gmail.com'),
+('Jerry','John@gmail.com'),
+('Marry','mary@gmail.com')
+ON CONFLICT(username)
+do nothing;
+
+#insert into users (username,email) values 
+('Andrew','and@gmail.com'),
+('Robert','robert@gmail.com'),
+('Jerry','John@gmail.com'),
+('Marry','mary@gmail.com')
+ON  CONFLICT(username)
+do update set email=EXCLUDED.email;
+
+

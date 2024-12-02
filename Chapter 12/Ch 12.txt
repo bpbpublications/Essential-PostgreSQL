@@ -1,0 +1,154 @@
+﻿  Chapter:12  
+#SELECT tablename, indexname, indexdef  
+FROM pg_indexes  
+WHERE schemaname = 'public'  
+ORDER BY tablename, indexname;
+
+#SELECT indexname, indexdef   FROM pg_indexes   WHERE tablename ='employees';
+
+#CREATE INDEX name_index on emp (ename);
+
+#SELECT indexname FROM pg_indexes WHERE tablename='emp';
+
+#EXPLAIN select * from emp;
+
+#alter table emp add constraint unique_eid unique(eid);
+
+#create UNIQUE INDEX unique_indx on person(id,email);
+
+#insert into person values (1111,'XXX','YYY','xx@gmail.com','M'),
+(1111,'QQQ','YYY','qq@gmail.com','M');
+
+#create index indx_dis on products(discontinued) where discontinued=0;
+
+#drop index indx_dis ;
+
+#create or replace view basic_product_info_view as
+select product_name, unit_price, units_in_stock, unit_price*units_in_stock as stock_value
+from products
+where units_in_stock>0;
+
+#SELECT * FROM basic_product_info_view ORDER BY product_name;
+
+#UPDATE basic_product_info_view
+SET unit_price = 20 
+WHERE product_name = 'Chang';
+
+#SELECT * FROM products WHERE product_id=2;
+
+#INSERT INTO basic_product_info_view (product_name, unit_price, units_in_stock)
+values ('Test product', 200, 123);
+
+#CREATE OR REPLACE VIEW basic_product_info as
+select product_id, product_name, discontinued, unit_price, units_in_stock, unit_price*units_in_stock as stock_value
+from products
+where units_in_stock>0
+order by product_id;
+
+#INSERT INTO basic_product_info_insertable_view
+(product_id, product_name, discontinued, unit_price, units_in_stock)
+values (113, 'Another test product', 0, 200, 123);
+
+#SELECT * from products where product_id=113 ;
+
+#ALTER VIEW basic_product_info RENAME to product_info;
+
+#create or replace view emp_10 as 
+select * from emp 
+where dept_num=10;
+
+#create or replace view emp_10 as 
+select * from emp 
+where dept_num=10
+WITH CHECK OPTION;
+
+#create or replace view emp_10 as select * from emp  where dept_num=10;
+
+#create or replace view emp_10_1 as select eid,ename,salary from emp_10
+WITH CASCADED CHECK OPTION;
+
+#insert into emp_10_1 values(112,'Johnson',56566);
+#insert into emp_10_1 values(113,'Johnson',56566,20,4);
+
+#create or replace view emp_10_2 as
+select * from emp_10
+WITH LOCAL CHECK OPTION;
+
+#create MATERIALIZED view emp_20 as
+select * from emp 
+where dept_num=20
+with no data;
+
+#refresh materialized view emp_20;
+
+#select * from emp_20;
+
+#DROP VIEW emp_10;
+#DROP VIEW emp_20;
+
+#SELECT
+        p.id,
+        p.parent_id,
+        p.name
+    FROM
+        family f
+    INNER JOIN tree f1 
+        ON f.parent_id = f1.id 
+) SELECT
+   *
+FROM
+   tree ;
+
+#CREATE TABLE employees (
+	emp_id serial PRIMARY KEY,
+	ename VARCHAR NOT NULL,
+	manager_id INT);
+
+#INSERT INTO employees (
+	emp_id,
+	ename,
+	manager_id
+)
+
+#WITH RECURSIVE subordinates AS (
+	SELECT
+		emp_id,
+		manager_id,
+		ename
+	FROM
+		employees
+	where emp_id=2
+	UNION
+		SELECT
+			e. emp_id,
+			e. manager_id,
+			e. ename
+		FROM
+			employees e
+		INNER JOIN subordinates s ON s.emp_id = e.manager_id
+) SELECT
+	*
+FROM
+	subordinates;
+
+
+#CREATE RECURSIVE VIEW report_to (emp_id, subordinates) AS 
+SELECT
+	emp_id,
+	ename AS subordinates
+FROM
+	employees
+WHERE
+	manager_id IS NULL
+UNION ALL
+	SELECT
+		e.emp_id,
+		(
+			rl.subordinates || ' > ' || e.ename
+		) AS subordinates
+	FROM
+		employees e
+	INNER JOIN report_to rl ON e.manager_id = rl.emp_id;
+
+#Select * from report_to;
+

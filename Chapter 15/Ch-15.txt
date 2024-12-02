@@ -1,167 +1,452 @@
-Ch 15
 
+  Chapter:15  
 
---Create an anonymous block to find the employee name living in 'London', as given:
-DO $$ declare v_city employees.city%type:='London'; fname varchar(20); begin  	select first_name into fname  	from employees  	where city=v_city;
- 	 	Raise Notice '%s living in London ',fname; end $$;
+#DO $$ 
+DECLARE
+  num integer := 0;
+BEGIN 
+   num := num + 1;
+   RAISE NOTICE 'The current value of number is %', num;
+END  $$;
 
+#DO $$
+declare
+v_city employees.city%type:='London';
+fname varchar(20);
+begin
+	select first_name into fname
+	from employees 
+	where city=v_city;
+		Raise Notice '%s living in London ',fname;
+end $$;
 
---Write an anonymous block to find the details of an employee whose ID is 2, as given:
-DO $$
- 	DECLARE
- 	 	emp EMPLOYEES%rowtype;
- 	BEGIN
- 	 	SELECT * 
- 	 	 	INTO emp 
- 	 	 	FROM EMPLOYEES 
- 	 	 	WHERE EMPLOYEE_ID = 2;
- 	 	raise info 'The employee whose id is % is % and lives in %'  	 	 	, 2, concat(emp.title_of_courtesy, emp.first_name,
- 	 	 	 	 	 	' ', emp.last_name), emp.city;
- 	END;
+#DO $$
+	DECLARE
+		emp EMPLOYEES%rowtype;
+	BEGIN
+		SELECT * 
+			INTO emp 
+			FROM EMPLOYEES 
+			WHERE EMPLOYEE_ID = 2;
+		raise info 'The employee whose id is % is % and lives in %'
+			, 2, concat(emp.title_of_courtesy, emp.first_name,
+						' ', emp.last_name), emp.city;
+	END;
 $$;
 
 
---Display the name and city of employee id 1, as given:
-DO $$     DECLARE         emp record;     BEGIN
+#DO $$
+    DECLARE
+        emp record;
+    BEGIN
         SELECT first_name, last_name, title_of_courtesy, city
             INTO emp 
-            FROM employees             WHERE employee_id=1;         raise info 'The employee whose id is % is % and lives in % '  	 	 	, 1, concat(emp.title_of_courtesy, emp.first_name, ' ', emp.last_name), emp.city;     END;
+            FROM employees
+            WHERE employee_id=1;
+        raise info 'The employee whose id is % is % and lives in % '
+			, 1, concat(emp.title_of_courtesy, emp.first_name, ' ', emp.last_name), emp.city;
+    END;
 $$
 
-
---Use the record type variable to print details of all employees working, as given:
-DO $$
- 	DECLARE  	 	emp record;  	BEGIN  	 	for emp in 
-   select employee_id, first_name, last_name, title_of_ courtesy, city, country
- 	 	 	from employees
- 	 	loop
- 	 	 	raise info 'The employee whose id is % is % and lives in %, %'
- 	 	 	 	, emp.employee_id
- 	 	 	 	, concat(emp.title_of_courtesy, emp.first_name, ' 
-', emp.last_name)
- 	 	 	 	, emp.city  	 	 	 	, emp.country;  	 	end loop;
- 	END;
+#DO $$
+	DECLARE
+		emp record;
+	BEGIN
+		for emp in 
+			select employee_id, first_name, last_name, title_of_courtesy, city, country
+			from employees
+		loop
+			raise info 'The employee whose id is % is % and lives in %, %'
+				, emp.employee_id
+				, concat(emp.title_of_courtesy, emp.first_name, ' ', emp.last_name)
+				, emp.city
+				, emp.country;
+		end loop;
+	END;
 $$;
 
+#do
+$$
+declare
+PI constant numeric:=3.14;
+area numeric:=0;
+radius numeric:=2.3;
 
---Declare a constant PI and calculate the area of a circle, as given:
-do $$ declare PI constant numeric:=3.14; area numeric:=0; radius numeric:=2.3; begin  	area= PI * radius * radius;  	
-raise info 'area of circle is %',area; end $$;
+begin
+	area= PI * radius * radius;
+	raise info 'area of circle is %',area;
+	
+end $$;
 
+#do $$
+begin
+	raise info 'information message %',now();
+	raise notice 'notice message %',now();
+	raise log 'log message %',now();
+	raise exception 'exception message %',now();
+	raise warning 'warning message %',now();
+end $$
+	
 
---The condition is a Boolean expression that evaluates to true or false. Refer to the following code: DO $$
-DECLARE   a integer := 10;   b integer := 20; BEGIN 
+#DO $$
+DECLARE
+  a integer := 10;
+  b integer := 20;
+BEGIN 
   IF a > b THEN
     RAISE NOTICE 'a is greater than b';
   END IF;
+
   IF a < b THEN
     RAISE NOTICE 'a is less than b';
   END IF;
+
   IF a = b THEN
     RAISE NOTICE 'a is equal to b';
   END IF;
 END $$;
 
+#Do $$
+DECLARE
+	a integer:=10;
+	b integer:=20;
+BEGIN
+	if a>b THEN
+		RAISE Notice 'a is greater than b';
+	else
+		RAISE Notice 'a is less than b';	
+	END IF;
+END $$;
 
---Refer to the following code:
-do $$
- 	declare
- 	 	data record;
- 	 	customer_category varchar(10);
- 	begin
- 	 	for data in 
- 	 	 	select company_name, sum(unit_price*quantity*(1-
-discount)) as order_total
- 	   	from customers 	   	join orders using (customer_id) 	   	join order_details using (order_id) 	   	group by company_name 	   	order by company_name 	 loop 	  if data.order_total <= 1000 then 	   	customer_category  := 'Silver'; 	  elsif data.order_total <= 5000 then 	   	customer_category := 'Gold'; 	  elsif data.order_total <= 10000 then 	   	customer_category := 'Platinum'; 	  else 	   	customer_category := 'Diamond'; 	  end if; 	 
-category; raise notice '% --> %', data.company_name, customer_ 	 
- 	end;
-$$;end loop;
+#Do $$
+DECLARE
+	a integer:=10;
+	b integer:=20;
+BEGIN
+	if a>b THEN
+		RAISE Notice 'a is greater than b';
+	ELSIF a<b THEN
+		RAISE Notice 'a is less than b';
+	else
+		RAISE Notice 'a is equal to  b';	
+	END IF;
+END $$;
 
---Update the shipper phone if shipper exists. Otherwise, insert new shipper, as given:
-do $$ declare
- 	ship_id shippers.shipper_id%type:=2;  	ship_name shippers.company_name%type:='First Flight';  	ship_phone shippers.phone%type:='(111)456-2734'; begin
- 	if exists(select * from shippers
- 	 	 	 where shipper_id=ship_id) then  	 	 	 update shippers set phone='(503)554-3187' 
- 	 	 	 where shipper_id=ship_id;
- 	 	raise info 'shipper details updated';
- 	else
- 	 	insert into shippers values (ship_id,ship_name,ship_phone);
- 	 	raise info 'New Shipper inserted';
- 	end if; 	 end $$;
+#DO $$
+DECLARE
+	emp_name EMPLOYEES.first_name%type;
+BEGIN
+	SELECT  first_name into emp_name
+	from EMPLOYEES
+	WHERE EMPLOYEE_ID=2;
+	if not found then
+		raise info 'Employee with the given id is not found';
+	else
+		raise info ;Employee name is %',emp_name;
+	end if;
+end; $$;
+
+#do $$
+	declare
+		data record;
+		customer_category varchar(10);
+	begin
+		for data in 
+			select company_name, sum(unit_price*quantity*(1-discount)) as order_total
+				from customers
+				join orders using (customer_id)
+				join order_details using (order_id)
+				group by company_name
+				order by company_name
+		loop
+			if data.order_total <= 1000 then
+				customer_category  := 'Silver';
+			elsif data.order_total <= 5000 then
+				customer_category := 'Gold';
+			elsif data.order_total <= 10000 then
+				customer_category := 'Platinum';
+			else
+				customer_category := 'Diamond';
+			end if;
+			
+			raise notice '% --> %', data.company_name, customer_category;
+		end loop;
+	end;
+$$;
 
 
---The code is:
-do $$ declare
- 	v_discount order_details.discount%type;  	rec record;
+#do $$
+declare
+	ship_id shippers.shipper_id%type:=2;
+	ship_name shippers.company_name%type:='First Flight';
+	ship_phone shippers.phone%type:='(111)456-2734';
 begin
- 	for rec in  	 	select order_id, country
- 	 	 	from orders join customers using (customer_id)
- 	 	 	where shipped_date is null  	loop
- 	 	case rec.country  	 	 	when 'USA' then  	 	 	 	v_discount := 0.25;  	 	 	when 'Canada' then  	 	 	 	v_discount := 0.15;  	 	 	when 'UK' then  	 	 	 	v_discount := 0.10;  	 	 	when 'India' then  	 	 	 	v_discount := 0.10;  	 	 	when 'Germany' then
- 	 	 	 	v_discount := 0.10;  	 
- 	 	 	else
- 	 	 	 	v_discount := 0.05;  	 	end case;
- 	 	raise notice 'Discount is % for order id % from country %', v_discount, rec.order_id, rec.country;
- 	 	update order_details  	 	 	set discount = v_discount  	 	 	where product_id in (57,12,23)  	 	 	and order_id = rec.order_id;  	end loop;
+	if exists(select * from shippers
+			 where shipper_id=ship_id) then
+			 update shippers set phone='(503)554-3187' 
+			 where shipper_id=ship_id;
+			
+		raise info 'shipper details updated';
+	else
+		insert into shippers values (ship_id,ship_name,ship_phone);
+		raise info 'New Shipper inserted';
+	end if;		
+
+end $$;
+
+#do $$
+declare
+	v_discount order_details.discount%type;
+	rec record;
+begin
+	for rec in 
+		select order_id, country
+			from orders join customers using (customer_id)
+			where shipped_date is null
+	loop
+		case rec.country
+			when 'USA' then
+				v_discount := 0.25;
+			when 'Canada' then
+				v_discount := 0.15;
+			when 'UK' then
+				v_discount := 0.10;
+			when 'India' then
+				v_discount := 0.10;
+			when 'Germany' then
+				v_discount := 0.10;			
+			else
+				v_discount := 0.05;
+		end case;
+		
+		raise notice 'Discount is % for order id % from country %', v_discount, rec.order_id, rec.country;
+		
+		update order_details
+			set discount = v_discount
+			where product_id in (57,12,23)
+			and order_id = rec.order_id;
+	end loop;
 end; $$ ;
 
-
---Check whether the given number is less than 5 ,10 or more than 10, using:
-do $$ declare num integer:=6; begin
- 	case
- 	 	when num < 5 then  	 	 	raise info 'num is less than 5';  	 	when num >= 5 and num < 10 then
- 	 	 	raise info 'num is more than 5';
- 	 	else 
-   raise info 'num is more than 10'; end case; end ; $$;
-
-
---Print the name and address of all customers, as given:
-do $$ declare
- 	cust record;
-begin  	for cust in select contact_name,address from customers
- 	loop
- 	raise info '% lives in %',cust.contact_name ,cust.address;
- 	end loop; end ; $$
-
-
---Check which product has high demand and which has low demand in product table, as given:
-do $$ declare
- 	p record;
-begin  for p in select product_name,units_on_order from products
- 	loop
- 	 	if p.units_on_order >10 then  	 	 	raise info 'High demand of product';  	 	elsif p.units_on_order >5 then  	 	 	raise info 'Growing product';
- 	 	else
- 	 	 	raise info 'Less demanding product';
- 	 	end if;
- 	end loop; end ; $$
-
-
---To return a table using cursor, use the following query:
-do $$ declare c1 cursor for select * from customers ; r1 record ; begin open c1 ; loop fetch c1 into r1; exit when not found ; raise notice '% - % : %',r1.customer_id,r1.contact_name,r1.company_name; end loop; close c1; end $$
-
-
---Write a stored procedure to check who has ordered the given order and on which date, as given:
-create or replace procedure order_detail(v_order_id numeric) as $$
+#do $$
 declare 
- 	data record;
+num integer:=6;
 begin
- 	select order_id,order_date ,customer_id into data from orders where order_id=v_order_id;  	raise info '% is ordered by customer % on %',v_order_id,data.
-customer_id,data.order_date; end; $$ language plpgsql;
+	case
+		when num < 5 then
+			raise info 'num is less than 5';
+		when num >= 5 and num < 10 then
+			raise info 'num is more than 5';
+		else 
+			raise info 'num is more than 10';
+end case;
+end ; $$;
 
+#do $$
+begin
+	for i in 1..10 loop
+	  raise notice 'i=%',i;
+	end loop;
+end; $$
 
---Create a stored procedure to add new employee in table.
-create or replace procedure add_new_emp(  	emp_id integer,  	emp_name varchar,  	amount integer,  	dept_id integer,  	boss integer)
-as $$ begin  	insert into emp values
- 	(emp_id,emp_name,amount,dept_id,boss);  	raise info 'Record submitted';
- 	commit;
+#do $$
+begin
+	for i in reverse 5..1 loop
+	   raise notice 'i=%',i;
+	end loop;
+end; $$
+
+# do $$
+begin
+	for i in reverse 10..1 by 2 loop
+	    raise notice 'i=%',i;
+	end loop;
+end; $$
+
+#do $$
+declare
+	cust record;
+begin
+	for cust in select contact_name,address from customers
+	loop
+	raise info '% lives in %',cust.contact_name ,cust.address;
+	end loop;
+end ; $$
+
+#do $$
+declare
+	p record;
+begin
+	for p in select product_name,units_on_order from products
+	loop
+		if p.units_on_order >10 then
+			raise info 'High demand of product';
+		elsif p.units_on_order >5 then
+			raise info 'Growing product';
+		else
+			raise info 'Less demanding product';
+		end if;
+	end loop;
+end ; $$
+
+#do $$
+declare 
+   counter integer := 1;
+begin	
+   while counter <= 5 loop
+      raise notice 'Counter %', counter;
+	  counter := counter + 1;
+   end loop;
+end$$;
+
+#do $$
+declare
+ n integer:= 0;
+ i integer := 10 ;  
+begin
+loop  
+exit when i = n ;
+raise notice '%', i;  
+i := i - 1 ;  
+end loop;  
+end; $$;
+
+#begin;
+
+#declare
+	my_cursor CURSOR FOR SELECT * FROM customers;
+#fetch 10 from my_cursor;
+#fetch 5 from my_cursor;
+
+#commit;
+
+#do
+$$
+declare c1 cursor for select * from customers ; 
+r1 record ;
+begin
+open c1 ;
+loop 
+fetch c1 into r1; exit when not found ;
+raise notice '% - % : %',r1.customer_id,r1.contact_name,r1.company_name;
+end loop;
+close c1;
+end
+$$
+
+#create or replace procedure message()
+as $$
+begin
+	raise notice 'Hello everyone';
 end; $$ language plpgsql;
 
-
---Let us write a stored procedure that displays the name and total quantity of product purchased by given customer:
-create or replace procedure product_by_customer(custId varchar) as $$ declare
- 	data record;
-begin for data in  	select product_name, sum(quantity) as qty  	from products p, order_details od, orders o, customers c  	where c.customer_id=custId  	and c.customer_id=o.customer_id and o.order_id=od.order_id  	and od.product_id=p.product_id  	group by product_name loop  	raise notice '%---%',data.product_name,data.qty; end loop;
+#create or replace procedure order_detail(v_order_id numeric)
+as $$
+declare 
+	data record;
+begin
+	select order_id,order_date ,customer_id into data from orders where order_id=v_order_id;
+	raise info '% is ordered by customer % on %',v_order_id,data.customer_id,data.order_date;
 end; $$ language plpgsql;
+
+#create or replace procedure update_emp(emp_id integer,amount integer)
+as $$
+declare
+begin
+	update emp set salary=salary+amount
+	where eid=emp_id;
+	commit;
+	raise info 'salary updated';
+end; $$ language plpgsql;
+
+#call update_emp(1,1000);
+
+#create or replace procedure add_new_emp(
+	emp_id integer,
+	emp_name varchar,
+	amount integer,
+	dept_id integer,
+	boss integer)
+as $$
+
+begin
+	insert into emp values
+	(emp_id,emp_name,amount,dept_id,boss);
+	raise info 'Record submitted';
+	commit;
+end; $$ language plpgsql;
+
+#call add_new_emp(14,'Leopard',56788,20,4);	
+
+#create or replace procedure product_by_customer(custId varchar)
+as $$
+declare
+	data record;
+begin
+for data in
+	select product_name, sum(quantity) as qty
+	from products p, order_details od, orders o, customers c
+	where c.customer_id=custId
+	and c.customer_id=o.customer_id and o.order_id=od.order_id
+	and od.product_id=p.product_id
+	group by product_name
+loop
+	raise notice '%---%',data.product_name,data.qty;
+end loop;
+end; $$ language plpgsql;
+
+#call product_by_customer('ANATR');
+
+#create or replace procedure proc2()
+as $$
+declare
+n varchar;
+begin
+	select contact_name into strict n from customers;
+EXCEPTION
+	when too_many_rows then
+	  	raise info 'fetching many rows';
+end; $$ language plpgsql;
+
+#call proc2()
+
+#do $$
+declare
+	v_product_name products.product_name%type;
+begin
+	select product_name 
+		into v_product_name
+		from products
+		where product_id=1111;
+		if  not found then
+			raise sqlstate '02000';
+		end if;
+exception
+	when SQLstate '02000' then
+		raise exception 'No product with given id found';
+	when too_many_rows then
+		raise exception 'More than one rows was fetched!';
+end; 
+$$ language plpgsql;
+
+#do $$
+declare
+	v_product_id products.product_id%type := 11;
+begin
+	delete from products
+		where product_id=v_product_id;
+	
+	if not found then
+		raise notice 'No product found with id %', v_product_id;
+	else
+		raise notice 'Product with id % deleted successfully!', v_product_id;
+	end if;
+exception
+	--when FOREIGN_KEY_VIOLATION then
+	when SQLSTATE '23503' then
+		raise notice 'Could not delete product with id %, due to foreign key violation', v_product_id;
+end;
+$$;
 
 
 

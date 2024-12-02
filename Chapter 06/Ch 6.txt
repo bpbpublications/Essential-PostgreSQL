@@ -1,0 +1,25 @@
+﻿Chapter:6  
+#alter table dept add column location varchar(30) default 'Earth';
+#alter table dept add column location varchar(30) ;
+
+#alter table dept rename column deptno to dept_num
+
+#alter table dept rename column dnmae to dept_name
+
+#alter table dept alter column dept_name set default 'Exist'
+
+#alter table employee alter column emp_name drop not null;
+
+#alter table employees add column gender varchar(7)
+
+#alter table employees add check (gender in ('Male','Female'))
+
+#select * from employees
+
+#insert into employees values(7,'Albert',56566.34,'Male')
+
+#insert into employees values(8,'Jackson',532566.34,'Boy')
+
+#alter table employees rename to Employee
+
+

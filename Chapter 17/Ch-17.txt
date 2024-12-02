@@ -1,0 +1,11 @@
+  Chapter:17  
+
+#Pg_dump -U postgres -W -F t first_db > E:\pgBackup\first_db.tar
+
+#pg_dumpall -U postgres > c:\pgbackup\all.sql
+
+#pg_restore -U postgres -d new_first_db -c E:\pgBackup\first_db.tar
+
+#pg_restore --dbname=first_db --create --verbose E:\pgBackup\first_db.tar
+
+

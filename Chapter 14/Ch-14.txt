@@ -1,0 +1,14 @@
+Chapter:14---
+#create role Jerry password 'password'
+
+#CREATE ROLE analyst WITH LOGIN PASSWORD 'hidden';
+
+# GRANT ALL on Person to Jerry
+
+#GRANT SELECT, INSERT ON TABLE employees TO Jerry;
+
+#alter role Jerry valid until '2025-01-01';
+
+#Revoke delete on Person from Jerry
+
+#REVOKE INSERT ON TABLE employees FROM jerry;

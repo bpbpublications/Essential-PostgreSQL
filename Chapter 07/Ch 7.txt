@@ -1,0 +1,46 @@
+﻿Chapter:7  
+#Select first_name, email from person;
+
+#select first_name ||' - ' || last_name ,  email from person;
+
+#select first_name ||' - ' || last_name as Full_name,  email from person;
+
+#select first_name, last_name SURNAME ,email from person;
+
+#select first_name ,email, gender "Gender of person" from person;
+
+#select * from person_json;
+
+#select info->'details' from person_json;
+
+#select info->'details'->>'age' from person_json;
+
+#SELECT NULLIF (1, 1) , NULLIF(1,0), NULLIF('A','B'),NULLIF('A','A');
+
+#select contact_name , nullif(region,'') from customers;
+
+#SELECT COALESCE (1, 2),COALESCE (NULL, 2 , 1);
+
+#select coalesce(nullif(region,''),'NA') from customers;
+
+#select 'Hello ' || 
+	case 
+		when gender='Male' then 'Sir'
+		when gender='Female' then 'Madam'
+	end
+	||' ' || first_name statement from person;
+
+#select title_of_courtesy::varchar from employees;
+
+#select birth_date as date from employees;
+
+#SELECT CAST('true' AS BOOLEAN),
+CAST('false' as BOOLEAN),
+CAST('T' as BOOLEAN),
+CAST('F' as BOOLEAN),
+CAST('1' as BOOLEAN),
+CAST('0' as BOOLEAN);
+
+#SELECT CAST ('01-01-2000' AS DATE)
+
+

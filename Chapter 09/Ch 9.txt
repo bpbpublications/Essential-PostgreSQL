@@ -1,0 +1,56 @@
+﻿Chapter:9  
+#create table orders(
+order_id serial primary key,
+customer_id varchar not null,
+quantity int default 1
+);
+
+#insert into orders (customer_id) values('ANATR');
+#insert into orders (customer_id,quantity) values('ALFKI',5)
+#insert into orders values (3,'ANTON',6)
+#insert into orders (order_id,customer_id,quantity) values (4,'SALVI',3)
+
+#insert into orders (customer_id,quantity) values
+('ANATR',2),
+('ALFKI',5),
+('ANTON',6),
+('SALVI',3)
+
+#create table university_dept(
+dept_id serial primary key,
+dept_name varchar
+)
+
+#insert into university_dept (dept_name) values
+('Computer Science'),
+('Accounting'),
+('Management'),
+('Operations'),
+('Research')
+
+
+#create table Abc_college_dept(
+college_id serial primary key,
+dept_name varchar
+)
+
+#insert into Abc_college_dept select * from university_dept;
+
+#insert into employees(emp_name,emp_salary) values('Chris',344526.4)
+returning *;
+
+#create table sales_employees as table employees;
+
+#select * from sales_employees;
+
+#create table sales_employees as select * from employees;
+#select * from sales_employees;
+
+#create table accounts_employees as select * from employees with no data;
+#select * from accounts_employees;
+
+#select emp_name, emp_salary  into table employee_salary from employees
+
+#select emp_name, emp_salary  into temp table employee_salary_temp from employees
+
+
